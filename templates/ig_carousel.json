@@ -1,0 +1,11 @@
+{
+  "name": "ig_carousel",
+  "width": 1080,
+  "height": 1080,
+  "multi": true,
+  "max_slides": 10,
+  "bg_color": [6, 6, 8],
+  "text_color": [0, 245, 212],
+  "font_size_ratio": 0.05,
+  "padding": 80
+}
