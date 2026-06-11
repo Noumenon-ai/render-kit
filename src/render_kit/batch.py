@@ -12,16 +12,22 @@ from render_kit.product import generate_product
 console = Console()
 
 
+class BatchError(Exception):
+    """Raised when a batch run cannot be completed."""
+
+
 def process_batch(
     csv_file: str,
     preset: str = "white_studio",
     output_dir: str = "renders",
 ) -> list[Path]:
-    """Process a CSV file of products. CSV should have at least a 'name' column."""
+    """Process a CSV file of products. CSV should have at least a 'name' column.
+
+    Raises BatchError if the CSV is missing, empty, or fails to process.
+    """
     csv_path = Path(csv_file)
     if not csv_path.exists():
-        console.print(f"  [red]CSV file not found: {csv_file}[/]")
-        return []
+        raise BatchError(f"CSV file not found: {csv_file}")
 
     results: list[Path] = []
 
@@ -29,8 +35,7 @@ def process_batch(
         with open(csv_path, newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
             if not reader.fieldnames:
-                console.print("  [red]CSV file is empty or has no headers.[/]")
-                return []
+                raise BatchError("CSV file is empty or has no headers.")
 
             # Find the name column (flexible matching)
             name_col = None
@@ -56,7 +61,9 @@ def process_batch(
             generated = generate_product(name, preset=item_preset, output_dir=output_dir)
             results.extend(generated)
 
+    except BatchError:
+        raise
     except Exception as e:
-        console.print(f"  [red]Error processing CSV: {e}[/]")
+        raise BatchError(f"Error processing CSV: {e}") from e
 
     return results

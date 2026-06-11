@@ -39,7 +39,7 @@ def product(
     _header()
     console.print(f"  Generating: [bold]{item}[/]")
     if all_presets:
-        console.print("  Presets: [bold]all ({len(ALL_PRESET_NAMES)})[/]")
+        console.print(f"  Presets: [bold]all ({len(ALL_PRESET_NAMES)})[/]")
     else:
         console.print(f"  Preset: [bold]{preset}[/]")
     console.print()
@@ -109,14 +109,18 @@ def batch(
     output_dir: str = typer.Option("renders", "--output", "-o", help="Output directory"),
 ) -> None:
     """Batch generate product images from CSV."""
-    from render_kit.batch import process_batch
+    from render_kit.batch import BatchError, process_batch
 
     _header()
     console.print(f"  CSV: [bold]{csv_file}[/]")
     console.print(f"  Preset: [bold]{preset}[/]")
     console.print()
 
-    results = process_batch(csv_file, preset=preset, output_dir=output_dir)
+    try:
+        results = process_batch(csv_file, preset=preset, output_dir=output_dir)
+    except BatchError as e:
+        console.print(f"  [red]{e}[/]")
+        raise typer.Exit(code=1)
     console.print(f"\n  [bold green]{len(results)} images generated.[/]")
 
 
