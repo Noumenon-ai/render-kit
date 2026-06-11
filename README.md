@@ -1,8 +1,11 @@
 # Render-Kit
 
-**Product photos + social media from the command line.**
+**Product visuals + social media images from the command line.**
 
-Free (PIL) or $0.01/image (Flux AI). No design skills needed.
+Two engines, one CLI:
+
+- **Free, no API key (PIL):** styled placeholder mockups — preset-driven layouts with your product name, ready for drafts, wireframes, and pipeline testing. These are designed text cards, not photographs.
+- **AI photos (Replicate, optional):** photorealistic product shots via Flux 1.1 Pro, about $0.04/image. This is the path that produces real-looking product photography.
 
 ```bash
 $ render-kit product "leather journal" --preset dark_luxury
@@ -17,8 +20,8 @@ $ render-kit product "leather journal" --preset dark_luxury
 ## Why This Exists
 
 Professional product photography costs $500+.
-Every Shopify and Etsy seller needs product photos.
-This tool generates them for free (PIL) or $0.01 each (Flux AI via Replicate).
+Every Shopify and Etsy seller needs product visuals.
+Render-Kit gives you one consistent CLI for the whole journey: free styled placeholders while you design and test (PIL, offline), then flip on photorealistic generation when you are ready (Flux 1.1 Pro via Replicate, about $0.04 per image — set `REPLICATE_API_TOKEN` and the same commands produce AI photos).
 
 ## Install
 
@@ -111,8 +114,8 @@ Coffee Mug,white_studio
 
 ## Engines
 
-- **PIL (default)** — Free, offline, generates styled placeholders
-- **Replicate (optional)** — $0.01/image, photorealistic via Flux AI
+- **PIL (default)** — Free, offline. Generates styled placeholder mockups (designed text cards using the preset's palette), not photographs. No API key needed.
+- **Replicate (optional)** — Photorealistic images via Flux 1.1 Pro (black-forest-labs/flux-1.1-pro), $0.04 per output image (replicate.com/pricing). Used automatically when a token is set; falls back to PIL otherwise.
 
 Set `REPLICATE_API_TOKEN` to enable AI generation:
 ```bash
