@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "render-kit"
-version = "1.0.0"
+version = "1.0.1"
 description = "Generate product photos and social media images from the command line."
 readme = "README.md"
 license = {text = "MIT"}
